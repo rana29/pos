@@ -146,8 +146,32 @@ Route::prefix('purchase')->name('purchase.')->group(function(){
 	Route::post('/update/{id}','purchasecontroller@update')->name('update');
 	Route::get('/delete/{id}','purchasecontroller@delete')->name('delete');
 	
+	Route::get('/approved','purchasecontroller@pending_list')->name('pending');
+	Route::get('pending/approved/{id}','purchasecontroller@pending_approved')->name('pending.approved');
+	
 }); 
 
 
 Route::post('show/catagory','purchasecontroller@showcatagory')->name('show.catagory');
 Route::post('show/product','purchasecontroller@showproduct')->name('show.product');
+
+  
+  /*invoice route*/
+Route::prefix('invoice')->name('invoice.')->group(function(){
+
+    
+	Route::get('/create','invoicecontroller@create')->name('create');
+	Route::post('/store','invoicecontroller@store')->name('store');
+	Route::get('/manage','invoicecontroller@manage')->name('manage');
+	Route::get('/active/{id}/{status}','invoicecontroller@active')->name('active');
+	Route::get('/edit/{id}','invoicecontroller@edit')->name('edit');
+	Route::post('/update/{id}','invoicecontroller@update')->name('update');
+	Route::get('/delete/{id}','invoicecontroller@delete')->name('delete');
+	
+	Route::get('/approved','invoicecontroller@pending_list')->name('pending');
+	Route::get('pending/approved/{id}','invoicecontroller@pending_approved')->name('pending.approved');
+	
+});
+
+Route::post('show/product','invoicecontroller@showproduct')->name('show.product');
+Route::get('current/product','invoicecontroller@current_stock')->name('current.stock');

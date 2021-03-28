@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePurchasesTable extends Migration
+class CreateInvoicedetilsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,17 @@ class CreatePurchasesTable extends Migration
      */
     public function up()
     {
-        Schema::create('purchases', function (Blueprint $table) {
+        Schema::create('invoicedetils', function (Blueprint $table) {
             $table->id();
-            $table->integer('supplier_id');
+            $table->date('date');
+            $table->integer('invoice_id');
             $table->integer('cat_id');
             $table->integer('product_id');
-            $table->string('purchase_no');
-            $table->longText('description')->nullable();
-            $table->double('buying_qty');
-            $table->double('unit_price');
-            $table->double('buying_price');
-            $table->integer('status')->default(0);
-            $table->date('date');
+            $table->integer('selling_price');
+            $table->integer('unit_price');
+            $table->double('selling_qty');
+            $table->integer('status')->default(1);
+
             $table->timestamps();
         });
     }
@@ -36,6 +35,6 @@ class CreatePurchasesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('purchases');
+        Schema::dropIfExists('invoicedetils');
     }
 }

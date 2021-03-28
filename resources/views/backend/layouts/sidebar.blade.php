@@ -80,6 +80,17 @@
                                         <li class=""><a href="{{route('purchase.create')}}" class="{{($route=='purchase.create')? 'active-item':''}}">Add purchase</a></li>
 
                                         <li class=""><a href="{{route('purchase.manage')}}" class="{{($route=='purchase.manage')? 'active-item':''}}">View purchase</a></li>
+                                        <li class=""><a href="{{route('purchase.pending')}}" class="{{($route=='purchase.pending')? 'active-item':''}}">Pending purchase</a></li>
+                                    </ul>
+                                </li>
+
+                                   <li class="has-child-item close-item {{($prefix=='/purchase')?'open-item':''}}">
+                                    <a><i class="fa fa-cubes" aria-hidden="true"></i><span>invoice</span></a>
+                                    <ul class="nav child-nav level-1">
+                                        <li class=""><a href="{{route('invoice.create')}}" class="{{($route=='invoice.create')? 'active-item':''}}">Add invoice</a></li>
+
+                                        <li class=""><a href="{{route('invoice.manage')}}" class="{{($route=='invoice.manage')? 'active-item':''}}">View invoice</a></li>
+                                        <li class=""><a href="{{route('invoice.pending')}}" class="{{($route=='invoice.pending')? 'active-item':''}}">Approved invoice</a></li>
                                     </ul>
                                 </li>
 

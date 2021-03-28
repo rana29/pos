@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
-    <title>Admin Dashbord</title>
+    <title>PG Admin Dashbord</title>
       <!--  jquery file -->
     <script src="{{asset('/')}}assets/admin/vendor/jquery/min.js"></script>
     <script src="{{asset('/')}}assets/admin/vendor/jquery/jquery-1.12.3.min.js"></script>
@@ -79,7 +79,7 @@
                 <div class="logo">
                     <a href="" class="on-click">
                        <!-- <img alt="logo" src="{{asset('/')}}assets/admin/images/header-logo.png" />  -->
-                       <h3><a class="ml-4" href="">Online_Shop</a></h3>
+                       <h3><a class="ml-4" href="">Pg_Shop</a></h3>
                     </a>
                 </div>
                 <div id="menu-toggle" class="visible-xs toggle-left-sidebar" data-toggle-class="left-sidebar-open" data-target="html">

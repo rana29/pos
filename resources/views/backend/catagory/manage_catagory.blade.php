@@ -54,12 +54,15 @@
                              
                                
                                 
-                             
+                                @php
+                                $count=App\product::where('cat_id',$row->cat_id)->count();
+                                @endphp
 
                                 <td>              
                                     <a href="{{route('catagory.edit',$row->id)}}" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>
-
+                                   @if($count<1)
                                       <a href="{{route('catagory.delete',$row->id)}}" id="delete" class="btn btn-success btn-xs "><i class="fa fa-trash"></i></a>
+                                      @endif
                                 </td>
 
 

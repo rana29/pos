@@ -40,11 +40,16 @@
                         <thead>
                             <tr>
                                 <th>Si No</th>
-                                <th>catagory Name</th>
-                                <th>supplier Name</th>
-                                <th>unit Name</th>
-                                <th>purchase Name</th>
-                                <th>quantity</th>
+                                <th>Purchase Date</th>
+                                <th>Purchase NO</th>
+                                <th>Supplier Name</th>
+                                <th>Catagory Name</th>
+                                <th>Product Name</th>
+                                <th>Description</th>
+                                <th>Quantity</th>
+                                <th>Unit Price</th>
+                                <th>Buying Price</th>
+                                <th>Status</th>
                                 
                                 <th>Action</th>
                             </tr>
@@ -54,20 +59,34 @@
                             @foreach($purchase as $key=>$row)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$row->cat_id}}</td>
+                                 <td>{{date('d-m-y',strtotime($row->date))}}</td>
+                                <td>{{$row->purchase_no}}</td>    
                                 <td>{{$row->supplier->name}}</td>
-                                <td>{{$row->unit->name}}</td>
                                 <td>{{$row->catagory->name}}</td>
-                                <td>{{$row->quantity}}</td>
+                                <td>{{$row->product->name}}</td>
+                                <td>{{$row->description}}</td>
+                                <td>
+                                  {{$row->buying_qty}}
+                                  {{$row->product->unit->name}}
+
+                                </td>
+                                <td>{{$row->unit_price}}</td>
+                                <td>{{$row->buying_price}}</td>
+                                <td>@if($row->status=='0')
+                                  <span class="btn btn-danger ">Pending</span>
+                                  @elseif($row->status=='1')
+                                  <span class="btn btn-primary">Approved</span>
+                                  @endif
+                                </td>
                              
                                
-                                
-                             
+                                            
 
                                 <td>              
-                                    <a href="{{route('purchase.edit',$row->id)}}" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>
-
+                                   
+                                  @if($row->status=='0')
                                       <a href="{{route('purchase.delete',$row->id)}}" id="delete" class="btn btn-success btn-xs "><i class="fa fa-trash"></i></a>
+                                      @endif
                                 </td>
 
 

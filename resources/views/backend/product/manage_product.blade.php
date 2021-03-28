@@ -62,12 +62,16 @@
                              
                                
                                 
-                             
+                             @php
+                                $count=App\purchase::where('product_id',$row->product_id)->count();
+                                @endphp
 
                                 <td>              
                                     <a href="{{route('product.edit',$row->id)}}" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>
-
+                                @if($count<1)
                                       <a href="{{route('product.delete',$row->id)}}" id="delete" class="btn btn-success btn-xs "><i class="fa fa-trash"></i></a>
+
+                                  @endif    
                                 </td>
 
 

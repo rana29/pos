@@ -9,8 +9,8 @@
 <div class="content-header">
         <ul class="breadcrumbs">
             <li><i class="fa fa-home" aria-hidden="true"></i><a href="{{route('home')}}">Dashboard</a></li>
-            <li><a href="javascript:avoid(0)">unit</a></li>
-            <li><a href="javascript:avoid(0)">Manage-unit</a></li>
+            <li><a href="javascript:avoid(0)">invoice</a></li>
+            <li><a href="javascript:avoid(0)">pending-invoice</a></li>
         </ul>
     </div>
 </div>
@@ -20,18 +20,15 @@
 
  <div class="row"> 
 
-    <div class="col-sm-12 col-md-8 col-md-offset-2">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
      @include('backend.error_message')
      <div class="panel b-primary bt-md">
         <div class="panel-content">
             <div class="row">
                 <div class="col-xs-6">
-                    <h4 class="text-success">Manage unit</h4>
+                    <h4 class="text-success">pending invoice</h4>
                 </div>
-                <div class="col-xs-6 text-right">
-                   <a class="btn btn-primary " href="{{route('unit.create')}}">Add unit</a> 
-
-               </div>
+               
            </div>
            <div class="row ">
             <div class="col-md-12">
@@ -40,37 +37,49 @@
                         <thead>
                             <tr>
                                 <th>Si No</th>
-                                <th>unit Name</th>
-                               
+                                <th>Customer Name</th>
+                                <th>Mobile</th>
+                                <th>Address</th>
+                                <th>Invoice no</th>
+                                <th>Date</th>
+                              
+                                <th>Description</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                                
                                 <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach($unit as $key=>$row)
+                          @foreach($invoice as $key=>$invoice)  
                             <tr>
                                 <td>{{$key+1}}</td>
-                                <td>{{$row->name}}</td>
-                              
-                             
-                               
-                                
-                                
-                                @php
-                                $count=App\product::where('unit_id',$row->unit_id)->count();
-                                @endphp
-
-                                <td>              
-                                    <a href="{{route('unit.edit',$row->id)}}" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>
-                                @if($count<1)
-                                      <a href="{{route('unit.delete',$row->id)}}" id="delete" class="btn btn-success btn-xs "><i class="fa fa-trash"></i></a>
-                                      @endif
+                                <td>{{$invoice->payment->customer->name}}</td>
+                                <td>{{$invoice->payment->customer->mobile}}</td>
+                                <td>{{$invoice->payment->customer->address}}</td>
+                                <td>{{$invoice->invoice_no}}</td>
+                                <td>{{date('d-m-y',strtotime($invoice->date))}}</td>
+                                <td>{{$invoice->description}}</td>
+                                <td>{{$invoice->payment->total}}</td>                                  
+                                 <td>@if($invoice->status=='0')
+                                  <span class="btn btn-danger ">Pending</span>
+                                  @elseif($invoice->status=='1')
+                                  <span class="btn btn-primary">Approved</span>
+                                  @endif
                                 </td>
 
-
+                                <td>              
+                                   
+                                  @if($invoice->status=='0')
+                                      <a href="{{route('invoice.pending.approved',$invoice->id)}}" id="approved" class="btn btn-success btn-xs "><i class="fa fa-check-circle"></i></a>
+                                      @endif
+                                       <a href="{{route('invoice.delete',$invoice->id)}}" id="delete" class="btn btn-success btn-xs "><i class="fa fa-trash"></i></a>
+                                </td>                                  
+                            
                                 </tr>
 
-                                      @endforeach
+                             @endforeach     
                                   </tbody>
                               </table>
                           </div>
@@ -108,26 +117,26 @@
     <script src="{{asset('/')}}assets/admin/sweet_alert/sweet_alert.js"></script>
 
     <script type="text/javascript">
-       $(document).on('click','#delete',function(e){
+       $(document).on('click','#approved',function(e){
           //alert('hell');
    e.preventDefault();
    var link=$(this).attr("href");
      //alert(link);
 
     Swal.fire({
-  title: 'Are you sure to delete?',
+  title: 'Are you sure to approved?',
   text: "You won't be able to revert this!",
   icon: 'warning',
   showCancelButton: true,
   confirmButtonColor: '#3085d6',
   cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, delete it!'
+  confirmButtonText: 'Yes, approved it!'
 }).then((result) => {
   if (result.value) {
     window.location.href=link;
     Swal.fire(
-      'Deleted!',
-      'Your file has been deleted.',
+      'approvedd!',
+      'Your file has been approvedd.',
       'success'
     )
   }

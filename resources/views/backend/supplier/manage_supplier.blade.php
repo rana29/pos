@@ -64,10 +64,16 @@
                                 <td> <input type="checkbox"  data-toggle="toggle" data-on="Active" data-off="Inactive" data-size="small" data-onstyle="primary" data-offstyle="danger" 
                                   id="status" data-id="{{$row->id}}" {{$row->status==1? 'checked':''}}> </td>
 
+                                @php
+                                $count=App\product::where('supplier_id',$row->supplier_id)->count();
+                                @endphp  
+                                
                                 <td>              
                                     <a href="{{route('supplier.edit',$row->id)}}" class="btn btn-success btn-xs"><i class="fa fa-pencil"></i></a>
+                                    @if($count<1)
 
                                       <a href="{{route('supplier.delete',$row->id)}}" id="delete" class="btn btn-success btn-xs "><i class="fa fa-trash"></i></a>
+                                      @endif
                                 </td>
 
 

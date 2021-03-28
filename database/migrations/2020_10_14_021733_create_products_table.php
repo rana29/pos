@@ -19,7 +19,7 @@ class CreateProductsTable extends Migration
             $table->string('cat_id')->nullable();
             $table->string('supplier_id')->nullable();
             $table->string('unit_id')->nullable();
-            $table->string('quantity')->nullable();
+            $table->string('quantity')->default(0);
             $table->string('status')->default('1');
             $table->timestamps();
         });
