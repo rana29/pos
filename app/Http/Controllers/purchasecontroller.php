@@ -148,6 +148,30 @@ class purchasecontroller extends Controller
     }
 
 
+
+
+    public function purchase_report(){
+
+      return view('backend.purchase.purchase_report');
+    }
+
+
+
+      public function purchase_report_show(Request $request){
+
+      //dd($request->all());
+      $s_date=date('y-m-d',strtotime($request->start));
+      $e_date=date('y-m-d',strtotime($request->end));
+      
+      $data['purchase']=purchase::whereBetween('date',[$s_date,$e_date])->where('status','1')->get();
+      //return $data;
+      $data['s_date']=date('y-m-d',strtotime($request->start));
+      $data['e_date']=date('y-m-d',strtotime($request->end));
+
+      return view('backend.purchase.purchase_report_show',$data);
+     }
+
+
     
 
      public function showcatagory(Request $request){

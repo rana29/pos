@@ -79,6 +79,11 @@ Route::prefix('customer')->name('customer.')->group(function(){
 	Route::get('/edit/{id}','customercontroller@edit')->name('edit');
 	Route::post('/update/{id}','customercontroller@update')->name('update');
 	Route::get('/delete/{id}','customercontroller@delete')->name('delete');
+	Route::get('/customer/credit','customercontroller@credit')->name('credit');
+	Route::get('/customer/credit/edit/{id}','customercontroller@credit_edit')->name('credit.edit');
+	Route::post('/customer/credit/update/{id}','customercontroller@credit_update')->name('credit.update');
+	Route::get('/customer/credit/detils/{invoice_id}','customercontroller@credit_detils')->name('credit.detils');
+	Route::get('/customer/paid/customer','customercontroller@paid_customer')->name('paid.credit');
 	
 }); 
 
@@ -148,6 +153,8 @@ Route::prefix('purchase')->name('purchase.')->group(function(){
 	
 	Route::get('/approved','purchasecontroller@pending_list')->name('pending');
 	Route::get('pending/approved/{id}','purchasecontroller@pending_approved')->name('pending.approved');
+	Route::get('purchase/report','purchasecontroller@purchase_report')->name('report');
+	Route::get('purchase/report/show','purchasecontroller@purchase_report_show')->name('report.show');
 	
 }); 
 
@@ -170,8 +177,24 @@ Route::prefix('invoice')->name('invoice.')->group(function(){
 	
 	Route::get('/approved','invoicecontroller@pending_list')->name('pending');
 	Route::get('pending/approved/{id}','invoicecontroller@pending_approved')->name('pending.approved');
+	Route::post('pending/approved/store/{id}','invoicecontroller@approved_store')->name('approved.store');
+	Route::get('daily/invoice/report','invoicecontroller@daily_report')->name('daily.report');
+	Route::get('daily/invoice/report/store','invoicecontroller@daily_report_show')->name('daily.report.store');
 	
 });
 
 Route::post('show/product','invoicecontroller@showproduct')->name('show.product');
 Route::get('current/product','invoicecontroller@current_stock')->name('current.stock');
+
+
+
+
+  /*stock route*/
+Route::prefix('stock')->name('stock.')->group(function(){
+
+Route::get('/manage/stock','StockController@manage')->name('manage');
+Route::get('/manage/supplier/stock','StockController@supplier_stock')->name('supplier.search');
+Route::get('/manage/supplier/stock/report','StockController@supplier_stock_report')->name('supplier.report');
+
+	
+});

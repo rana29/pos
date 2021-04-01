@@ -88,12 +88,6 @@
                                                       <input type="number" class="form-control" id="current_qty" name="current_qty" readonly>
                                                     </div>
                                                 </div>
-                                              
-
-
-                                               
-                                                  
-
                                                 
                                                 <div class="form-group ">
                                                     <div class="col-sm-offset-3 col-sm-9 mt-4">
@@ -119,10 +113,7 @@
                                 <th>product name</th>
                                 <th>pcs</th>
                                 <th>unit price</th>
-                                
-                            
                                 <th>Total price price</th>
-                                
                                 <th>action</th>
                             </tr>
                         </thead>
@@ -247,11 +238,11 @@
              @{{product_name}} 
         </td>
         <td>
-            <input type="number" min='1' name="selling_qty" class="col-sm-3 control-label selling_qty" value="1" >
+            <input type="number" min='1' name="selling_qty[]" class="col-sm-3 control-label selling_qty" value="1" >
             
         </td>
         <td>
-            <input type="number"  name="unit_price" class="col-sm-3 control-label unit_price" value="" >
+            <input type="text"  name="unit_price[]" class="col-sm-3 control-label unit_price"  >
         </td>
 
         
@@ -277,9 +268,7 @@
      var date=$('#date').val();
      //alert(date);
      var invoice_no=$('#invoice_no').val();
-     var supplier_id=$('#supplier_id').val();
-     var supplier_name=$('#supplier_id').find('option:selected').text();
-     //alert(supplier_name);
+    
      var cat_id=$('#cat_id').val();
      //alert(cat_id);
      var catagory_name=$('#cat_id').find('option:selected').text();
@@ -294,8 +283,6 @@
      var data={
         date:date,
         invoice_no:invoice_no,
-        supplier_id:supplier_id,
-        supplier_name:supplier_name,
         cat_id:cat_id,
         catagory_name:catagory_name,
         product_id:product_id,
@@ -411,7 +398,7 @@
 
 
 
-
+<!------------------ code for paid status --------------------------------------->
 
 
 <script type="text/javascript">

@@ -4,7 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\customer;
+use App\payment;
+use App\paymentdetils;
 use Session;
+use Auth;
 
 class customercontroller extends Controller
 {
@@ -106,5 +109,79 @@ class customercontroller extends Controller
     	$delete->delete();
       Session::flash('success', 'customer has delete successfully');
       return back(); 
+    }
+
+
+    public function credit(){
+
+      $payment=payment::whereIn('paid_status',['partial_paid','full_due'])->get();
+      //dd($payment);
+
+      return view('backend.customer.credit_customer',compact('payment'));
+    }
+
+
+    public function credit_edit($invoice_id){
+      $payment=payment::where('invoice_id',$invoice_id)->first();
+      //return $payment;
+      return view('backend.customer.credit_edit_customer',compact('payment'));
+    }
+
+
+    public function credit_update(Request $request,$invoice_id){
+      //dd($request->all());
+      if($request->new_paid < $request->paid){
+        return redirect()->back();
+      }else{
+        $payment=payment::where('invoice_id',$invoice_id)->first();
+        $paymentdetils=new paymentdetils();
+        $payment->paid_status=$request->paid_status;
+
+
+        if($request->paid_status=='full_paid'){
+          $payment->paid=payment::where('invoice_id',$invoice_id)->first()['paid']+$request->new_paid;
+          //$payment->due=payment::where('invoice_id',$invoice_id)->first()['due']-$request->paid;
+          $payment->due='0';
+          $paymentdetils->current_paid=$request->new_paid;
+        }
+
+        elseif($request->paid_status=='partial_paid'){
+
+          $payment->paid=payment::where('invoice_id',$invoice_id)->first()['paid']+$request->paid;
+          $payment->due=payment::where('invoice_id',$invoice_id)->first()['due']-$request->paid;
+          $paymentdetils->current_paid=$request->paid;
+
+        }
+        $payment->save();
+        $paymentdetils->invoice_id=$invoice_id;
+        $paymentdetils->date=date('y-m-d',strtotime($request->date));
+        $paymentdetils->updated_by=Auth::user()->id;
+        $paymentdetils->save();
+        return redirect()->back();
+
+
+
+        
+
+      }
+    }
+
+
+    public function credit_detils ($invoice_id){
+
+      
+      $payment=payment::where('invoice_id',$invoice_id)->first();
+      //return $payment;
+      return view('backend.customer.credit_detils',compact('payment'));
+    }
+
+
+    public function paid_customer(){
+
+    $paid=payment::where('due','0')->get(); 
+
+    //dd($paid);
+
+    return view('backend.customer.paid_customer',compact('paid'));
     }
 }

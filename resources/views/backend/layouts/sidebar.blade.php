@@ -40,6 +40,8 @@
                                         <li class=""><a href="{{route('customer.create')}}" class="{{($route=='customer.create')? 'active-item':''}}">Add customer</a></li>
 
                                         <li class=""><a href="{{route('customer.manage')}}" class="{{($route=='customer.manage')? 'active-item':''}}">View customer</a></li>
+                                        <li class=""><a href="{{route('customer.credit')}}" class="{{($route=='customer.manage')? 'active-item':''}}">Credit customer</a></li>
+                                        <li class=""><a href="{{route('customer.paid.credit')}}" class="{{($route=='customer.manage')? 'active-item':''}}">Paid Customer</a></li>
                                     </ul>
                                 </li>
 
@@ -81,6 +83,7 @@
 
                                         <li class=""><a href="{{route('purchase.manage')}}" class="{{($route=='purchase.manage')? 'active-item':''}}">View purchase</a></li>
                                         <li class=""><a href="{{route('purchase.pending')}}" class="{{($route=='purchase.pending')? 'active-item':''}}">Pending purchase</a></li>
+                                        <li class=""><a href="{{route('purchase.report')}}" class="{{($route=='purchase.pending')? 'active-item':''}}"> Purchase Report</a></li>
                                     </ul>
                                 </li>
 
@@ -90,7 +93,19 @@
                                         <li class=""><a href="{{route('invoice.create')}}" class="{{($route=='invoice.create')? 'active-item':''}}">Add invoice</a></li>
 
                                         <li class=""><a href="{{route('invoice.manage')}}" class="{{($route=='invoice.manage')? 'active-item':''}}">View invoice</a></li>
-                                        <li class=""><a href="{{route('invoice.pending')}}" class="{{($route=='invoice.pending')? 'active-item':''}}">Approved invoice</a></li>
+                                        <li class=""><a href="{{route('invoice.pending')}}" class="{{($route=='invoice.pending')? 'active-item':''}}">Pending Invoice</a></li>
+                                        <li class=""><a href="{{route('invoice.daily.report')}}" class="{{($route=='invoice.pending')? 'active-item':''}}">Daily Invoice Report</a></li>
+                                        <li class=""><a href="{{route('stock.manage')}}" class="{{($route=='invoice.pending')? 'active-item':''}}">stock Report</a></li>
+                                    </ul>
+                                </li>
+
+
+                                   <li class="has-child-item close-item {{($prefix=='/purchase')?'open-item':''}}">
+                                    <a><i class="fa fa-cubes" aria-hidden="true"></i><span>Stock </span></a>
+                                    <ul class="nav child-nav level-1">
+                                      
+                                    <li class=""><a href="{{route('stock.manage')}}" class="{{($route=='invoice.pending')? 'active-item':''}}">Stock Report</a></li>
+                                    <li class=""><a href="{{route('stock.supplier.search')}}" class="{{($route=='invoice.pending')? 'active-item':''}}">Supplier Stock Report</a></li>
                                     </ul>
                                 </li>
 

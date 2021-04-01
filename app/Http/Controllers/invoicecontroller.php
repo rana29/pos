@@ -88,7 +88,7 @@ class invoicecontroller extends Controller
       		  	$cat_count=count($request->cat_id);
       		  	for($i=0; $i<$cat_count; $i++){
 
-      		  	$invoicedetils=new invoicedetils();
+      		  	   $invoicedetils=new invoicedetils();
 
                  $invoicedetils->date=date('y-m-d',strtotime($request->date));
                  $invoicedetils->invoice_id=$invoice->id;
@@ -246,6 +246,37 @@ class invoicecontroller extends Controller
     }
 
 
+     public function approved_store(Request $request,$id){
+
+     foreach($request->selling_qty as $key=>$val){
+      $invoicedetils=invoicedetils::where('id',$key)->first();
+      $product=product::where('id',$invoicedetils->product_id)->first();
+      if($product->quantity<$request->selling_qty[$key]){
+      return redirect()->back()->with('success', 'quantity amount must be less than total quqntity');
+
+      }
+     }
+     
+     $invoice=invoice::find($id);
+     //$invoice->approved_by=Auth::user()->id;
+     $invoice->status='1';
+      DB::transaction(function() use($request,$invoice,$id) {
+        foreach($request->selling_qty as $key=>$val){
+        $invoicedetils=invoicedetils::where('id',$key)->first();
+        $product=product::where('id',$invoicedetils->product_id)->first();
+        $product->quantity=((float)$product->quantity)-((float)$request->selling_qty[$key]);
+        $product->save();
+
+        }
+        $invoice->save();
+
+      });
+
+      return redirect()->back()->with('success', 'pending approved success');
+
+    }
+
+
     
 
      public function showcatagory(Request $request){
@@ -283,5 +314,23 @@ class invoicecontroller extends Controller
 
       //return $product->name;
        return $output;
+     }
+
+
+
+     public function daily_report(){
+
+      return view('backend.invoice.daily_invoice');
+     }
+
+     public function daily_report_show(Request $request){
+      $s_date=date('y-m-d',strtotime($request->start));
+      $e_date=date('y-m-d',strtotime($request->end));
+      
+      $data['invoice']=invoice::whereBetween('date',[$s_date,$e_date])->where('status','1')->get();
+      $data['s_date']=date('y-m-d',strtotime($request->start));
+      $data['e_date']=date('y-m-d',strtotime($request->end));
+
+      return view('backend.invoice.show_daily_invoice',$data);
      }
 }

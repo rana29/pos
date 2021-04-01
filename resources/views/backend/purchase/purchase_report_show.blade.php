@@ -10,7 +10,7 @@
         <ul class="breadcrumbs">
             <li><i class="fa fa-home" aria-hidden="true"></i><a href="{{route('home')}}">Dashboard</a></li>
             <li><a href="javascript:avoid(0)">purchase</a></li>
-            <li><a href="javascript:avoid(0)">Manage-purchase</a></li>
+            <li><a href="javascript:avoid(0)">Daily-purchase-Report</a></li>
         </ul>
     </div>
 </div>
@@ -20,51 +20,54 @@
 
  <div class="row"> 
 
-    <div class="col-sm-12 col-md-8 col-md-offset-2">
+    <div class="col-sm-12 col-md-10 col-md-offset-1">
      @include('backend.error_message')
      <div class="panel b-primary bt-md">
         <div class="panel-content">
             <div class="row">
                 <div class="col-xs-6">
-                    <h4 class="text-success">Pending purchase List</h4>
+                    <h4 class="text-success">Daily-purchase-Report</h4>
                 </div>
-              <!--   <div class="col-xs-6 text-right">
-                   <a class="btn btn-primary " href="{{route('purchase.create')}}">Add purchase</a> 
+                <div class="col-xs-6 text-right">
+                   <a class="btn btn-primary " href="{{route('purchase.report')}}">Search Again</a> 
 
-               </div> -->
+               </div>
            </div>
            <div class="row ">
             <div class="col-md-12">
                 <div class="table-responsive">
+                  <span class="btn btn-primary">Date: {{$s_date}}</span ><span class="btn btn-danger">To</span><span class="btn btn-success"> &nbsp &nbsp {{$e_date}}</span>
                     <table id="basic-table" class="data-table table table-striped table-hover table-bordered" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>Si No</th>
-                                <th>Purchase Date</th>
+                                
                                 <th>Purchase NO</th>
                                 <th>Supplier Name</th>
                                 <th>Catagory Name</th>
                                 <th>Product Name</th>
-                                <th>Description</th>
+                          
                                 <th>Quantity</th>
                                 <th>Unit Price</th>
                                 <th>Buying Price</th>
-                                <th>Status</th>
                                 
-                                <th>Action</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
+                          @php
+                          $total=0;
+                          @endphp
 
                             @foreach($purchase as $key=>$row)
                             <tr>
                                 <td>{{$key+1}}</td>
-                                 <td>{{date('d-m-y',strtotime($row->date))}}</td>
+                                 
                                 <td>{{$row->purchase_no}}</td>    
                                 <td>{{$row->supplier->name}}</td>
                                 <td>{{$row->catagory->name}}</td>
                                 <td>{{$row->product->name}}</td>
-                                <td>{{$row->description}}</td>
+                                
                                 <td>
                                   {{$row->buying_qty}}
                                   {{$row->product->unit->name}}
@@ -72,27 +75,20 @@
                                 </td>
                                 <td>{{$row->unit_price}}</td>
                                 <td>{{$row->buying_price}}</td>
-                                <td>@if($row->status=='0')
-                                  <span class="btn btn-danger ">Pending</span>
-                                  @elseif($row->status=='1')
-                                  <span class="btn btn-primary">Approved</span>
-                                  @endif
-                                </td>
+                                
                              
-                               
-                                            
-
-                                <td>              
-                                   
-                                  @if($row->status=='0')
-                                      <a href="{{route('purchase.pending.approved',$row->id)}}" id="approved" class="btn btn-success btn-xs "><i class="fa fa-check-circle"></i></a>
-                                      @endif
-                                </td>
-
-
                                 </tr>
+                                @php
+                                $total+=$row->buying_price
+                                @endphp
+                              
 
                                       @endforeach
+
+                                        <tr>
+                                  <td colspan="7" class="text-right text-primary">SubTotal</td>
+                                  <td>{{$total}}</td>
+                                </tr>
                                   </tbody>
                               </table>
                           </div>
@@ -104,58 +100,14 @@
 
            <!-- FULL CIRCLE LOADER  -->
     
-    <div>
-    
-    <div>
-    <div class="ml-loader  circle">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-  </div>
+  
 
       </div>
 
  <!-- sweet alert -->
     <script src="{{asset('/')}}assets/admin/sweet_alert/sweet_alert.js"></script>
 
-    <script type="text/javascript">
-       $(document).on('click','#approved',function(e){
-          //alert('hell');
-   e.preventDefault();
-   var link=$(this).attr("href");
-     //alert(link);
-
-    Swal.fire({
-  title: 'Are you sure to approved?',
-  text: "You won't be able to revert this!",
-  icon: 'warning',
-  showCancelButton: true,
-  confirmButtonColor: '#3085d6',
-  cancelButtonColor: '#d33',
-  confirmButtonText: 'Yes, approved it!'
-}).then((result) => {
-  if (result.value) {
-    window.location.href=link;
-    Swal.fire(
-      'Approved!',
-      'Your file has been approved.',
-      'success'
-    )
-  }
-})
-});
-    </script>
+   
 
       <!-- =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= -->
       @endsection

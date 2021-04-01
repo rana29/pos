@@ -136,7 +136,7 @@
                             <tr>
                                 <th>catagory</th>
                                 <th>product name</th>
-                                <th>pcs</th>
+                                <th>Quantity</th>
                                 <th>unit price</th>
                                 <th>Description</th>
                             
@@ -195,11 +195,12 @@
              @{{product_name}} 
         </td>
         <td>
-            <input type="number" min='1' name="buying_qty" class="col-sm-3 control-label buying_qty" value="1" >
+            <input type="number" min='1' name="buying_qty[]" class="col-sm-3 control-label buying_qty" value="1" >
+             
             
         </td>
         <td>
-            <input type="number"  name="unit_price" class="col-sm-3 control-label unit_price" value="" >
+            <input type="number"  name="unit_price[]" class="col-sm-3 control-label unit_price" value="" >
         </td>
 
         <td>
